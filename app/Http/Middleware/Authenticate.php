@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Http\Request;
+
+class Authenticate extends Middleware
+{
+    /**
+     * Handle unauthenticated requests for API.
+     */
+    protected function redirectTo(Request $request): ?string
+    {
+        // Untuk API, jangan redirect ke route login
+        return null;
+    }
+}
