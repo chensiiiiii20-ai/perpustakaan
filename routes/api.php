@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\ActivityLogController;
 |--------------------------------------------------------------------------
 */
 
+// API routes ready
+
 // Login (ambil token)
 Route::post('/login', [AuthController::class, 'login']);
 
