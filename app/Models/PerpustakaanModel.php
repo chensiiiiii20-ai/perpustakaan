@@ -23,6 +23,7 @@ class PerpustakaanModel extends Model
 
     // Kolom yang boleh diisi (mass assignment)
     protected $fillable = [
+        'kategori_id',
         'judul_buku',
         'penulis',
         'penerbit',
