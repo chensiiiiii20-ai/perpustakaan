@@ -45,14 +45,12 @@ class KategoriController extends Controller
     }
 
     /**
-     * POST tambah kategori baru
+     * POST tambah kategori
      */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_kategori' => 'required|string|max:100',
-            'deskripsi'     => 'nullable|string',
-            'is_active'     => 'nullable|boolean'
+            'nama_kategori' => 'required|string|max:100'
         ]);
 
         if ($validator->fails()) {
@@ -64,9 +62,7 @@ class KategoriController extends Controller
 
         try {
             $data = Kategori::create([
-                'nama_kategori' => $request->nama_kategori,
-                'deskripsi'     => $request->deskripsi,
-                'is_active'     => $request->is_active ?? true
+                'nama_kategori' => $request->nama_kategori
             ]);
 
             return ApiFormatter::success(
@@ -89,7 +85,7 @@ class KategoriController extends Controller
     public function show($id)
     {
         try {
-            $data = Kategori::with('perpustakaan')->find($id);
+            $data = Kategori::find($id);
 
             if ($data) {
                 return ApiFormatter::success(
@@ -112,14 +108,12 @@ class KategoriController extends Controller
     }
 
     /**
-     * PUT update semua data kategori
+     * PUT update kategori
      */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'nama_kategori' => 'required|string|max:100',
-            'deskripsi'     => 'nullable|string',
-            'is_active'     => 'required|boolean'
+            'nama_kategori' => 'required|string|max:100'
         ]);
 
         if ($validator->fails()) {
@@ -140,9 +134,7 @@ class KategoriController extends Controller
             }
 
             $data->update([
-                'nama_kategori' => $request->nama_kategori,
-                'deskripsi'     => $request->deskripsi,
-                'is_active'     => $request->is_active
+                'nama_kategori' => $request->nama_kategori
             ]);
 
             return ApiFormatter::success(
@@ -159,14 +151,12 @@ class KategoriController extends Controller
     }
 
     /**
-     * PATCH update sebagian data kategori
+     * PATCH update sebagian kategori
      */
     public function updatePartial(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'nama_kategori' => 'sometimes|required|string|max:100',
-            'deskripsi'     => 'sometimes|nullable|string',
-            'is_active'     => 'sometimes|required|boolean'
+            'nama_kategori' => 'sometimes|required|string|max:100'
         ]);
 
         if ($validator->fails()) {
@@ -187,9 +177,7 @@ class KategoriController extends Controller
             }
 
             $data->update($request->only([
-                'nama_kategori',
-                'deskripsi',
-                'is_active'
+                'nama_kategori'
             ]));
 
             return ApiFormatter::success(
@@ -206,7 +194,7 @@ class KategoriController extends Controller
     }
 
     /**
-     * DELETE hapus kategori
+     * DELETE kategori
      */
     public function destroy($id)
     {
