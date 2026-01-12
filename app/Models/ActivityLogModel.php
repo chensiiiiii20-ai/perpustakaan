@@ -9,25 +9,10 @@ class ActivityLogModel extends Model
 {
     use HasFactory;
 
-    /**
-     * Nama tabel di database
-     */
     protected $table = 'activity_logs';
-
-    /**
-     * Primary key
-     */
     protected $primaryKey = 'id';
-
-    /**
-     * Nonaktifkan updated_at
-     * (karena tabel log biasanya hanya pakai created_at)
-     */
     public $timestamps = false;
 
-    /**
-     * Kolom yang boleh diisi (mass assignment)
-     */
     protected $fillable = [
         'user_id',
         'action',
@@ -37,9 +22,6 @@ class ActivityLogModel extends Model
         'created_at'
     ];
 
-    /**
-     * Default value otomatis
-     */
     protected $attributes = [
         'user_id'    => null,
         'description'=> null,
@@ -47,11 +29,22 @@ class ActivityLogModel extends Model
         'user_agent' => null
     ];
 
-    /**
-     * Relasi ke tabel users
-     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // ✅ TAMBAHKAN INI
+    public static function filterSensitiveData(array $data)
+    {
+        $sensitiveFields = ['password', 'password_confirmation', 'token'];
+
+        foreach ($sensitiveFields as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = '******';
+            }
+        }
+
+        return $data;
     }
 }
