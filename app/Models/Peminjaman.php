@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\PerpustakaanModel;
+use App\Models\User;
 
 class Peminjaman extends Model
 {
+    use HasFactory;
+
     protected $table = 'peminjaman';
 
     protected $fillable = [
@@ -17,13 +21,24 @@ class Peminjaman extends Model
         'status'
     ];
 
+    /**
+     * Relasi ke user
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function buku()
+    /**
+     * ✅ RELASI YANG HILANG (INI PENYEBAB ERROR)
+     * Relasi ke buku / perpustakaan
+     */
+    public function perpustakaan()
     {
-        return $this->belongsTo(PerpustakaanModel::class, 'perpustakaan_id');
+        return $this->belongsTo(
+            PerpustakaanModel::class,
+            'perpustakaan_id',
+            'id'
+        );
     }
 }
